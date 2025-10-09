@@ -1,0 +1,116 @@
+static void Main(string[] args)
+        {
+            string[] cards = new string[]{"Ace hearts", "2 hearts", "3 hearts", "4 hearts", "5 hearts", "6 hearts", "7 hearts", "8 hearts", "9 hearts", "10 hearts", "Jack hearts", "Queen hearts", "King hearts",
+                                  "Ace diamonds", "2 diamonds", "3 diamonds", "4 diamonds", "5 diamonds", "6 diamonds", "7 diamonds", "8 diamonds", "9 diamonds", "10 diamonds", "Jack diamonds", "Queen diamonds", "King diamonds",
+                                  "Ace clubs", "2 clubs", "3 clubs", "4 clubs", "5 clubs", "6 clubs", "7 clubs", "8 clubs", "9 clubs", "10 clubs", "Jack clubs", "Queen clubs", "King clubs",
+                                  "Ace spades", "2 spades", "3 spades", "4 spades", "5 spades", "6 spades", "7 spades", "8 spades", "9 spades", "10 spades", "Jack spades", "Queen spades", "King spades"};
+
+            while (true)
+            {
+                Console.WriteLine("Choose an option");
+                Console.WriteLine("1) Print Array");
+                Console.WriteLine("2) Choose a random card");
+                Console.WriteLine("3) Shuffle Cards");
+                Console.WriteLine("4) 5 random cards");
+                Console.WriteLine("5) exit");
+
+                string userInput = Console.ReadLine();
+
+                if (userInput == "1")
+                {
+                    printArray(cards);
+
+                }
+                else if (userInput == "2")
+                {
+                    string returnCard = randomCard(cards);
+                    Console.WriteLine(returnCard);
+                }
+                else if (userInput == "3")
+                {
+                    shuffleCards(cards);
+                }
+                else if (userInput == "4")
+                {
+                    fiveRandomCards(cards);
+                }
+                else if (userInput == "5")
+                {
+                    Console.WriteLine("GoodBye!");
+                    break;
+                }
+               
+
+            }
+
+        }
+
+        //Print the entire array
+        static void printArray(string[] myArray)
+        {
+            for (int i = 0; i < myArray.Length; i++)
+            {
+                Console.WriteLine(myArray[i]);
+            }
+        }
+
+        //choose random card
+        static string randomCard(string[] myArray)
+        {
+            Random rnd = new Random();
+            int randomNum = rnd.Next(0, myArray.Length);
+
+            return myArray[randomNum];
+        }
+
+        //shuffle the cards
+        static void shuffleCards(string[] myArray)
+        {
+            Random rnd = new Random();
+            int rndNum1;
+            int rndNum2;
+            string temp;
+
+            for (int i = 0; i < 10000; i++)
+            {
+                rndNum1 = rnd.Next(0, myArray.Length);
+                rndNum2 = rnd.Next(0, myArray.Length);
+
+                temp = myArray[rndNum2];
+                myArray[rndNum2] = myArray[rndNum1];
+                myArray[rndNum1] = temp;
+            }
+
+            printArray(myArray);
+        }
+
+        //choose 5 random cards
+        static void fiveRandomCards(string[] myArray)
+        {
+
+            Random rnd = new Random();
+            int rndNum;
+            string[] fiveCards = new string[30];
+
+            for (int i = 0; i < 30; i++)
+            {
+                bool cardExists = false;
+
+                do
+                {
+                    cardExists = false;
+                    rndNum = rnd.Next(0, myArray.Length);
+                    if (fiveCards.Contains(myArray[rndNum]))
+                    {
+                        cardExists = true;
+                    }
+
+                } while (cardExists == true);
+
+                fiveCards[i] = myArray[rndNum];
+            }
+
+            printArray(fiveCards);
+
+
+        }
