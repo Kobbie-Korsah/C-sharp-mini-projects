@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    // List to store all tasks as dictionaries with task name and completion status
+    static List<Dictionary<string, object>> tasks = new List<Dictionary<string, object>>();
+
+
+static void AddTask(string task)
+    {
+        // Adds a new task to the list with "completed" initially set to False
+        tasks.Add(new Dictionary<string, object>
+    {
+        {"task", task},
+        {"completed", false}
+    });
+        Console.WriteLine($"Task '{task}' added!");
+    }
+
+    static void ViewTasks()
+    {
+        // Displays all tasks with their completion status
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("No tasks yet.");
+        }
+        else
+        {
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                bool completed = (bool)tasks[i]["completed"];
+                string status = completed ? "✓" : "✗";
+                Console.WriteLine($"{i + 1}. {tasks[i]["task"]} [{status}]");
+            }
+        }
+    }
+
+    static void CompleteTask(int index)
+    {
+        // Marks a specific task as completed based on its index number
+        if (index > 0 && index <= tasks.Count)
+        {
+            tasks[index - 1]["completed"] = true;
+            Console.WriteLine($"Task '{tasks[index - 1]["task"]}' marked as complete!");
+        }
+        else
+        {
+            Console.WriteLine("Invalid task number.");
+        }
+    }
+
+    static void Main()
+    {
+        // Main program loop that runs continuously until the user exits
+        while (true)
+        {
+            Console.WriteLine("\n--- Simple Task Manager ---");
+            Console.WriteLine("1. Add Task\n2. View Tasks\n3. Complete Task\n4. Exit");
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            // Handles user's menu choice
+            if (choice == "1")
+            {
+                Console.Write("Enter task: ");
+                AddTask(Console.ReadLine());
+            }
+            else if (choice == "2")
+            {
+                ViewTasks();
+            }
+            else if (choice == "3")
+            {
+                Console.Write("Task number to complete: ");
+                if (int.TryParse(Console.ReadLine(), out int index))
+                {
+                    CompleteTask(index);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                }
+            }
+            else if (choice == "4")
+            {
+                Console.WriteLine("Goodbye!");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice.");
+            }
+        }
+    }
+
+
+}
